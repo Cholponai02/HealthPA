@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HealthPA.Views.CalculatorPage"
+             Title="Калькулятор калорий"
+             BackgroundColor="#fafcff"
+             Padding="20">
+
+        <ScrollView>
+    <StackLayout>
+        <!-- Заголовок страницы -->
+        <StackLayout HorizontalOptions="Center" Padding="20">
+            <Label Text="Введите свои данные"
+               FontSize="26"
+               TextColor="#3F4A55"
+               HorizontalOptions="Center"
+               FontAttributes="Bold"
+               Padding="10,0,10,10"/>
+        </StackLayout>
+
+        <!-- Ввод данных -->
+        <StackLayout Spacing="15">
+            <!-- Обернуты в Frame для стилизации -->
+            <Frame BorderColor="#c2eafc" Padding="10, 5, 0, 2" CornerRadius="8" BackgroundColor="White">
+                <Entry x:Name="sexEntry" 
+                   Placeholder="Пол (м/ж)" 
+                   Keyboard="Text" 
+                   HorizontalOptions="FillAndExpand" />
+            </Frame>
+
+            <Frame BorderColor="#c2eafc" Padding="10, 5, 0, 2" CornerRadius="8" BackgroundColor="White">
+                <Entry x:Name="weightEntry" 
+                   Placeholder="Ваш вес (кг)" 
+                   Keyboard="Numeric" 
+                   HorizontalOptions="FillAndExpand" />
+            </Frame>
+
+            <Frame BorderColor="#c2eafc" Padding="10, 5, 0, 2" CornerRadius="8" BackgroundColor="White">
+                <Entry x:Name="heightEntry" 
+                   Placeholder="Ваш рост (см)" 
+                   Keyboard="Numeric" 
+                   HorizontalOptions="FillAndExpand" />
+            </Frame>
+
+            <Frame BorderColor="#c2eafc" Padding="10, 5, 0, 2" CornerRadius="8" BackgroundColor="White">
+                <Entry x:Name="ageEntry" 
+                   Placeholder="Ваш возраст" 
+                   Keyboard="Numeric" 
+                   HorizontalOptions="FillAndExpand" />
+            </Frame>
+
+            <!-- Образ жизни -->
+            <Label Text="Ваш образ жизни:"
+               FontSize="18"
+               TextColor="#3F4A55"
+               Margin="0,10,0,5"
+               HorizontalOptions="Start" />
+
+            <Frame BorderColor="#c2eafc" Padding="0" CornerRadius="8" BackgroundColor="White">
+                <Picker x:Name="activityPicker"
+                    BackgroundColor="#FFFFFF"
+                    HorizontalOptions="FillAndExpand">
+                    <Picker.Items>
+                        <x:String>Сидячий</x:String>
+                        <x:String>Тренировки 1-3 раза в неделю</x:String>
+                        <x:String>Занятия 3-5 дней в неделю</x:String>
+                        <x:String>Интенсивные тренировки 6-7 раз в неделю</x:String>
+                        <x:String>Спортсмены, упражнения чаще чем раз в день</x:String>
+                    </Picker.Items>
+                </Picker>
+            </Frame>
+
+            <!-- Кнопка для расчета -->
+            <Button Text="Рассчитать"
+                BackgroundColor="#4CAF50"
+                TextColor="White"
+                FontSize="18"
+                CornerRadius="10"
+                HeightRequest="50"
+                Margin="0,10"
+                Clicked="OnCalculateClicked" />
+        </StackLayout>
+
+        <!-- Результаты -->
+        <StackLayout x:Name="resultLayout" IsVisible="False" Spacing="15" Padding="20" BackgroundColor="#FFFFFF" >
+            <Label x:Name="caloriesResult" FontSize="18" TextColor="#3F4A55" />
+            <Label x:Name="proteinResult" FontSize="18" TextColor="#3F4A55" />
+            <Label x:Name="fatResult" FontSize="18" TextColor="#3F4A55" />
+            <Label x:Name="carbsResult" FontSize="18" TextColor="#3F4A55" />
+        </StackLayout>
+    </StackLayout>
+        </ScrollView>
+
+
+</ContentPage>

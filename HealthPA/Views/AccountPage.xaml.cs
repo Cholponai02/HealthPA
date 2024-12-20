@@ -13,7 +13,7 @@ public partial class AccountPage : ContentPage
 
     private async void OnNutritionClicked(object sender, EventArgs e)
     {
-        await DisplayAlert("Питание", "Открыть раздел Питание", "OK");
+        await Shell.Current.GoToAsync("CalculatorPage");
     }
 
     private async void OnSleepClicked(object sender, EventArgs e)
