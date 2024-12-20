@@ -4,12 +4,32 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:HealthPA"
+    xmlns:views="clr-namespace:HealthPA.Views"
     Shell.FlyoutBehavior="Disabled"
     Title="HealthPA">
 
-    <ShellContent
+    <!--<ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Route="MainPage" />-->
+
+    <TabBar
+     >
+        <ShellContent
+         Title="Главное"
+         Icon="home_icon.png"
+         ContentTemplate="{DataTemplate views:MainMenuPage}"
+         Route="MainMenuPage"
+         Shell.NavBarIsVisible="True"
+         />
+
+        <ShellContent
+         Title="Аккаунт"
+         Icon="account_icon.png"
+         ContentTemplate="{DataTemplate views:AccountPage}"
+         Shell.NavBarIsVisible="False"
+         Route="AccountPage"
+         />
+    </TabBar>
 
 </Shell>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HealthPA.Views.AccountPage"
+             Title="AccountPage">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="5">
+            <!-- Картинка профиля -->
+            <Image Source="face.jpg"
+                   WidthRequest="150" HeightRequest="150"
+                   Aspect="AspectFill"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" 
+                   Margin="0,10,0,20" />
+
+            <!-- Имя пользователя -->
+            <Label Text="Чолпонай Манапова" 
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                   Margin="0,0,0,20" />
+
+            <Frame CornerRadius="10"
+                   BackgroundColor="#4CAF50"
+                   Padding="0"
+                   HeightRequest="50">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnMedicinesClicked" />
+                </Frame.GestureRecognizers>
+                <Grid Padding="15,0"
+                      HorizontalOptions="FillAndExpand"
+                      VerticalOptions="Center">
+                    <!-- Текст -->
+                    <Label Text="Лекарства"
+                           FontSize="18"
+                           VerticalTextAlignment="Center"
+                           TextColor="White" />
+
+                    <!-- Стрелка -->
+                    <Image Source="arrow_right.png"
+                           HorizontalOptions="End"
+                           VerticalOptions="Center"
+                           WidthRequest="20" 
+                           HeightRequest="20" />
+                </Grid>
+            </Frame>
+
+            <!-- Питание -->
+            <Frame CornerRadius="10"
+                   BackgroundColor="#2196F3"
+                   Padding="0"
+                   HeightRequest="50">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNutritionClicked" />
+                </Frame.GestureRecognizers>
+                <Grid Padding="15,0"
+                      HorizontalOptions="FillAndExpand"
+                      VerticalOptions="Center">
+                    <Label Text="Питание"
+                           FontSize="18"
+                           VerticalTextAlignment="Center"
+                           TextColor="White" />
+                    <Image Source="arrow_right.png"
+                           HorizontalOptions="End"
+                           VerticalOptions="Center"
+                           WidthRequest="20" 
+                           HeightRequest="20" />
+                </Grid>
+            </Frame>
+
+            <!-- Сон -->
+            <Frame CornerRadius="10"
+                   BackgroundColor="#FF9800"
+                   Padding="0"
+                   HeightRequest="50">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnSleepClicked" />
+                </Frame.GestureRecognizers>
+                <Grid Padding="15,0"
+                      HorizontalOptions="FillAndExpand"
+                      VerticalOptions="Center">
+                    <Label Text="Сон"
+                           FontSize="18"
+                           VerticalTextAlignment="Center"
+                           TextColor="White" />
+                    <Image Source="arrow_right.png"
+                           HorizontalOptions="End"
+                           VerticalOptions="Center"
+                           WidthRequest="20" 
+                           HeightRequest="20" />
+                </Grid>
+            </Frame>
+
+            <!-- Электронная медкарта -->
+            <Frame CornerRadius="10"
+                   BackgroundColor="#9C27B0"
+                   Padding="0"
+                   HeightRequest="50">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnMedicalRecordClicked" />
+                </Frame.GestureRecognizers>
+                <Grid Padding="15,0"
+                      HorizontalOptions="FillAndExpand"
+                      VerticalOptions="Center">
+                    <Label Text="Электронная медкарта"
+                           FontSize="18"
+                           VerticalTextAlignment="Center"
+                           TextColor="White" />
+                    <Image Source="arrow_right.png"
+                           HorizontalOptions="End"
+                           VerticalOptions="Center"
+                           WidthRequest="20" 
+                           HeightRequest="20" />
+                </Grid>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
