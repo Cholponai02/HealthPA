@@ -12,6 +12,7 @@ namespace HealthPA
         private void RegisterRoutingPages()
         {
             Routing.RegisterRoute("CalculatorPage", typeof(CalculatorPage));
+            Routing.RegisterRoute("SportPage", typeof(SportPage));
         }
     }
 }

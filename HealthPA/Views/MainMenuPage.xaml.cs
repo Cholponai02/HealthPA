@@ -6,4 +6,10 @@ public partial class MainMenuPage : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private async void OnSportClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("SportPage");
+    }
+
 }

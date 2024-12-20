@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HealthPA.Views.SportPage"
+             Title="Спорт">
+    <ScrollView>
+        <StackLayout>
+
+            <!-- Заголовок страницы -->
+            <StackLayout HorizontalOptions="Center" Padding="20">
+                <Label Text="Тренировки"
+               FontSize="26"
+               TextColor="#3F4A55"
+               HorizontalOptions="Center"
+               FontAttributes="Bold"
+               Padding="10"/>
+            </StackLayout>
+
+            <!-- Секция с тренировками -->
+            <Grid ColumnSpacing="15" RowSpacing="15" Padding="10">
+                <!-- Первая строка блоков -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Блок для тренировки спины -->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Frame BorderColor="#4CAF50" Padding="0" CornerRadius="10" BackgroundColor="White" HeightRequest="150">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnSpineTap" />
+                    </Frame.GestureRecognizers>
+                    <StackLayout>
+                        <Image Source="back.png" HeightRequest="80" HorizontalOptions="Center" />
+                        <Label Text="Спина" HorizontalOptions="Center" FontSize="16" TextColor="#3F4A55" Padding="5"/>
+                    </StackLayout>
+                </Frame>
+
+                <!-- Блок для тренировки рук -->
+                <Frame Grid.Column="1" BorderColor="#4CAF50" Padding="0" CornerRadius="10" BackgroundColor="White" HeightRequest="150">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnArmsTap" />
+                    </Frame.GestureRecognizers>
+                    <StackLayout>
+                        <Image Source="arm.png" HeightRequest="80" HorizontalOptions="Center" />
+                        <Label Text="Руки" HorizontalOptions="Center" FontSize="16" TextColor="#3F4A55" Padding="5"/>
+                    </StackLayout>
+                </Frame>
+
+                <!-- Вторая строка блоков -->
+                <Frame Grid.Row="1" BorderColor="#4CAF50" Padding="0" CornerRadius="10" BackgroundColor="White" HeightRequest="150">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnLegsTap" />
+                    </Frame.GestureRecognizers>
+                    <StackLayout>
+                        <Image Source="leg.png" HeightRequest="80" HorizontalOptions="Center" />
+                        <Label Text="Ноги" HorizontalOptions="Center" FontSize="16" TextColor="#3F4A55" Padding="5"/>
+                    </StackLayout>
+                </Frame>
+
+                <!-- Блок для тренировки ягодиц -->
+                <Frame Grid.Row="1" Grid.Column="1" BorderColor="#4CAF50" Padding="0" CornerRadius="10" BackgroundColor="White" HeightRequest="150">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnGlutesTap" />
+                    </Frame.GestureRecognizers>
+                    <StackLayout>
+                        <Image Source="glutes.png" HeightRequest="80" HorizontalOptions="Center" />
+                        <Label Text="Ягодицы" HorizontalOptions="Center" FontSize="16" TextColor="#3F4A55" Padding="5"/>
+                    </StackLayout>
+                </Frame>
+
+                <!-- Третья строка: Блоки для пресса и разминки -->
+                <Frame Grid.Row="2" BorderColor="#4CAF50" Padding="0" CornerRadius="10" BackgroundColor="White" HeightRequest="150">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnAbsTap" />
+                    </Frame.GestureRecognizers>
+                    <StackLayout>
+                        <Image Source="abs.png" HeightRequest="80" HorizontalOptions="Center" />
+                        <Label Text="Пресс" HorizontalOptions="Center" FontSize="16" TextColor="#3F4A55" Padding="5"/>
+                    </StackLayout>
+                </Frame>
+
+                <!-- Блок для разминки -->
+                <Frame Grid.Row="2" Grid.Column="1" BorderColor="#4CAF50" Padding="0" CornerRadius="10" BackgroundColor="White" HeightRequest="150">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnWarmUpTap" />
+                    </Frame.GestureRecognizers>
+                    <StackLayout>
+                        <Image Source="warmup.png" HeightRequest="80" HorizontalOptions="Center" />
+                        <Label Text="Разминка" HorizontalOptions="Center" FontSize="16" TextColor="#3F4A55" Padding="5"/>
+                    </StackLayout>
+                </Frame>
+            </Grid>
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
