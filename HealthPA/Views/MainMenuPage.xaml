@@ -3,10 +3,82 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HealthPA.Views.MainMenuPage"
              Title="MainMenuPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Главная"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <StackLayout>
+
+
+        <StackLayout Padding="20, 40, 20, 20" HorizontalOptions="Center">
+            <Label Text="Доброе утро, Ирина!"
+               FontSize="24"
+               TextColor="#333333"
+               HorizontalOptions="Center" />
+
+            <Label Text="Ваши текущие показатели:"
+               FontSize="16"
+               TextColor="#333333"
+               HorizontalOptions="Center" />
+
+            <Frame Padding="20" BackgroundColor="#4CAF50" CornerRadius="10" Margin="0,20">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Padding="10">
+                    <Label Text="Вес: 70 кг" FontSize="18" TextColor="White" HorizontalOptions="StartAndExpand"/>
+                    <Label Text="Шаги: 12000" FontSize="18" TextColor="White" HorizontalOptions="End"/>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+
+        <!-- Карточки для перехода в разделы -->
+        <Grid Padding="10, 10, 10, 0" RowSpacing="10" ColumnSpacing="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Спорт -->
+            <Frame Padding="0" BackgroundColor="White" HasShadow="True" CornerRadius="10" Grid.Row="0" Grid.Column="0">
+                <StackLayout HorizontalOptions="Center" Padding="10">
+                    <Image Source="sport.png" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center"/>
+                    <Label Text="Спорт"
+                       FontSize="20"
+                       TextColor="#333333"
+                       HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+
+            <!-- Привычки -->
+            <Frame Padding="0" BackgroundColor="White" HasShadow="True" CornerRadius="10" Grid.Row="0" Grid.Column="1">
+                <StackLayout HorizontalOptions="Center" Padding="10">
+                    <Image Source="goal.png" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center"/>
+                    <Label Text="Питание"
+                       FontSize="20"
+                       TextColor="#333333"
+                       HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+
+            <!-- Питание -->
+            <Frame Padding="0" BackgroundColor="White" HasShadow="True" CornerRadius="10" Grid.Row="1" Grid.Column="0">
+                <StackLayout HorizontalOptions="Center" Padding="10">
+                    <Image Source="diet.png" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center"/>
+                    <Label Text="Сон"
+                       FontSize="20"
+                       TextColor="#333333"
+                       HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+
+            <!-- Электронная медкарта -->
+            <Frame Padding="0" BackgroundColor="White" HasShadow="True" CornerRadius="10" Grid.Row="1" Grid.Column="1">
+                <StackLayout HorizontalOptions="Center" Padding="10">
+                    <!--<Image Source="" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center"/>
+                    <Label Text=""
+                       FontSize="20"
+                       TextColor="#333333"
+                       HorizontalOptions="Center"/>-->
+                </StackLayout>
+            </Frame>
+        </Grid>
+    </StackLayout>
 </ContentPage>
