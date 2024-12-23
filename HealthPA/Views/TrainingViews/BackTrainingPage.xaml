@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HealthPA.Views.TrainingViews.BackTrainingPage"
+             Title="Тренировка для спины">
+    <ScrollView>
+        <StackLayout Spacing="20">
+
+            <!-- Заголовок -->
+            <Label Text="Тренировка для спины" 
+                   FontSize="24" 
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="#3F4A55" />
+
+            <!-- Краткое описание -->
+            <Label Text="Этот комплекс упражнений поможет укрепить мышцы спины, улучшить осанку и снизить напряжение в поясничной области."
+                   FontSize="16" 
+                   TextColor="#5F5F5F"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Margin="10,0"/>
+
+            <!-- Упражнение 1 -->
+            <Frame Padding="10" CornerRadius="10" BackgroundColor="White" HasShadow="True">
+                <StackLayout>
+                    <Image Source="back1.gif" HeightRequest="150">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnGifTapped" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Label Text="1. Подъемы корпуса (супермен)" 
+                           FontSize="18" 
+                           FontAttributes="Bold"
+                           TextColor="#3F4A55" 
+                           Margin="0,5" />
+                    <Label Text="Лягте на живот, вытяните руки вперед. Поднимайте одновременно руки и ноги, удерживаясь в верхней точке 2-3 секунды."
+                           FontSize="14"
+                           TextColor="#5F5F5F" />
+                </StackLayout>
+            </Frame>
+
+            <!-- Упражнение 2 -->
+            <Frame Padding="10" CornerRadius="10" BackgroundColor="White" HasShadow="True">
+                <StackLayout>
+                    <Image Source="exercise2.jpg" HeightRequest="150" />
+                    <Label Text="2. Планка с подъемом руки" 
+                           FontSize="18" 
+                           FontAttributes="Bold"
+                           TextColor="#3F4A55" 
+                           Margin="0,5" />
+                    <Label Text="Примите упор лежа, вытяните одну руку вперед, удерживайте равновесие 10-15 секунд, затем смените руку."
+                           FontSize="14"
+                           TextColor="#5F5F5F" />
+                </StackLayout>
+            </Frame>
+
+            <!-- Упражнение 3 -->
+            <Frame Padding="10" CornerRadius="10" BackgroundColor="White" HasShadow="True">
+                <StackLayout>
+                    <Image Source="exercise3.jpg" HeightRequest="150" />
+                    <Label Text="3. Разведения гантелей в наклоне" 
+                           FontSize="18" 
+                           FontAttributes="Bold"
+                           TextColor="#3F4A55" 
+                           Margin="0,5" />
+                    <Label Text="Встаньте, наклоните корпус вперед, разведите руки с гантелями в стороны. Повторите 12-15 раз."
+                           FontSize="14"
+                           TextColor="#5F5F5F" />
+                </StackLayout>
+            </Frame>
+
+            <!-- Кнопка начать тренировку -->
+            <Button Text="Начать тренировку" 
+                    BackgroundColor="#4CAF50" 
+                    TextColor="White"
+                    FontSize="18" 
+                    CornerRadius="10"
+                    HeightRequest="50"
+                    Clicked="StartTraining" />
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

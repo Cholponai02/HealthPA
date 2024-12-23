@@ -6,10 +6,10 @@ public partial class SportPage : ContentPage
 	{
 		InitializeComponent();
 	}
-
-    private void OnSpineTap(object sender, EventArgs e)
+    
+    private async void OnSpineTap(object sender, EventArgs e)
     {
-        DisplayAlert("Тренировка для спины", "Вы выбрали тренировку для спины.", "OK");
+        await Shell.Current.GoToAsync("BackTrainingPage");
     }
 
     private void OnArmsTap(object sender, EventArgs e)

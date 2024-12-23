@@ -1,4 +1,5 @@
 ﻿using HealthPA.Views;
+using HealthPA.Views.TrainingViews;
 
 namespace HealthPA
 {
@@ -13,6 +14,8 @@ namespace HealthPA
         {
             Routing.RegisterRoute("CalculatorPage", typeof(CalculatorPage));
             Routing.RegisterRoute("SportPage", typeof(SportPage));
+            Routing.RegisterRoute("GifAnimationPage", typeof(GifAnimationPage));
+            Routing.RegisterRoute("BackTrainingPage", typeof(BackTrainingPage));
         }
     }
 }
