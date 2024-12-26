@@ -1,3 +1,4 @@
+using HealthPA.ViewModels;
 namespace HealthPA.Views.TrainingViews;
 
 public partial class BackTrainingPage : ContentPage
@@ -5,7 +6,8 @@ public partial class BackTrainingPage : ContentPage
 	public BackTrainingPage()
 	{
 		InitializeComponent();
-	}
+        BindingContext = new BackTrainingViewModel();
+    }
 
     private async void StartTraining(object sender, EventArgs e)
     {

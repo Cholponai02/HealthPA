@@ -16,6 +16,7 @@ namespace HealthPA
             Routing.RegisterRoute("SportPage", typeof(SportPage));
             Routing.RegisterRoute("GifAnimationPage", typeof(GifAnimationPage));
             Routing.RegisterRoute("BackTrainingPage", typeof(BackTrainingPage));
+            Routing.RegisterRoute("ArmTrainingPage", typeof(ArmTrainingPage));
         }
     }
 }

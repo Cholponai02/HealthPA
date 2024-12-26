@@ -1,17 +1,17 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="HealthPA.Views.TrainingViews.BackTrainingPage"
+             x:Class="HealthPA.Views.TrainingViews.ArmTrainingPage"
              xmlns:viewmodels="clr-namespace:HealthPA.ViewModels"
-             Title="Тренировка для спины">
+             Title="Тренировка для рук">
     <ScrollView>
         <StackLayout Spacing="20">
-            <Label Text="Тренировка для спины" 
+            <Label Text="Тренировка для рук" 
                    FontSize="24" 
                    FontAttributes="Bold"
                    HorizontalOptions="Center"
                    TextColor="#3F4A55" />
 
-            <Label Text="Этот комплекс упражнений поможет укрепить мышцы спины, улучшить осанку и снизить напряжение в поясничной области."
+            <Label Text="Этот комплекс упражнений направлен на укрепление мышц рук и плечевого пояса."
                    FontSize="16" 
                    TextColor="#5F5F5F"
                    HorizontalOptions="Center"
@@ -26,7 +26,7 @@
                             <StackLayout>
                                 <Image Source="{Binding ImageSource}" HeightRequest="150">
                                     <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:BackTrainingViewModel}}, Path=OnGifTapped}" />
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ArmTrainingViewModel}}, Path=OnGifTapped}" />
                                     </Image.GestureRecognizers>
                                 </Image>
                                 <Label Text="{Binding Title}" 
@@ -49,8 +49,7 @@
                     TextColor="White"
                     FontSize="18" 
                     CornerRadius="10"
-                    HeightRequest="50"
-                    Clicked="StartTraining" />
+                    HeightRequest="50"/>
         </StackLayout>
     </ScrollView>
 </ContentPage>

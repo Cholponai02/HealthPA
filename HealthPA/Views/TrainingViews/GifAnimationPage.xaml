@@ -5,6 +5,6 @@
              xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
              Title="Анимация упражнения">
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-        <skia:SKCanvasView x:Name="GifCanvas" PaintSurface="OnPaintSurface" />
+        <!--<skia:SKCanvasView x:Name="GifCanvas" PaintSurface="OnPaintSurface" />-->
     </StackLayout>
 </ContentPage>

@@ -12,9 +12,9 @@ public partial class SportPage : ContentPage
         await Shell.Current.GoToAsync("BackTrainingPage");
     }
 
-    private void OnArmsTap(object sender, EventArgs e)
+    private async void OnArmsTap(object sender, EventArgs e)
     {
-        DisplayAlert("Тренировка для рук", "Вы выбрали тренировку для рук.", "OK");
+        await Shell.Current.GoToAsync("ArmTrainingPage");
     }
 
     private void OnLegsTap(object sender, EventArgs e)
