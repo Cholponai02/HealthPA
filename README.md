@@ -1,6 +1,6 @@
 # HealthPA
 
-$${\color{red}Это приложение для мобильных устройств \space \color{lightblue}которое включает в себя различные тренировочные комплексы, направленные на укрепление различных частей тела: спины, рук, ног, ягодиц и других.  \space \color{orange}Каждая тренировка содержит изображения и описание упражнений, а также возможность для пользователя приступить к тренировке.}$$
+$${\color{red}Это \space приложение\space  для \space мобильных \space устройств \space \color{lightblue}которое\space  включает \space в \space себя \space различные\space  тренировочные\space  комплексы, \space направленные\space  на\space  укрепление \space различных \space частей \space тела:\space  спины,\space  рук, \space ног, \space ягодиц \space и \space других.  \space \color{orange}Каждая \space тренировка \space содержит \space изображения \space и \space описание\space  упражнений, \space а \space также \space возможность \space  для \space  пользователя \space приступить\space  к \space тренировке.}$$
 
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
 ![License](https://img.shields.io/badge/license-MIT-blue)
