@@ -17,23 +17,23 @@ public partial class SportPage : ContentPage
         await Shell.Current.GoToAsync("ArmTrainingPage");
     }
 
-    private void OnLegsTap(object sender, EventArgs e)
+    private async void OnLegsTap(object sender, EventArgs e)
     {
-        DisplayAlert("Тренировка для ног", "Вы выбрали тренировку для ног.", "OK");
+        await Shell.Current.GoToAsync("LegTrainingPage");
     }
 
-    private void OnGlutesTap(object sender, EventArgs e)
+    private async void OnGlutesTap(object sender, EventArgs e)
     {
-        DisplayAlert("Тренировка для ягодиц", "Вы выбрали тренировку для ягодиц.", "OK");
+        await Shell.Current.GoToAsync("GluteTrainingPage");
     }
 
-    private void OnAbsTap(object sender, EventArgs e)
+    private async void OnAbsTap(object sender, EventArgs e)
     {
-        DisplayAlert("Тренировка для пресса", "Вы выбрали тренировку для пресса.", "OK");
+        await Shell.Current.GoToAsync("AbsTrainingPage");
     }
 
-    private void OnWarmUpTap(object sender, EventArgs e)
+    private async void OnWarmUpTap(object sender, EventArgs e)
     {
-        DisplayAlert("Разминка", "Вы выбрали разминку.", "OK");
+        await Shell.Current.GoToAsync("WarmUpPage");
     }
 }
