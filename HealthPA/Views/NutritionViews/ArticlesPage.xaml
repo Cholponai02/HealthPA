@@ -1,0 +1,34 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HealthPA.Views.NutritionViews.ArticlesPage"
+             Title="Полезные статьи">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="15">
+            <Label Text="Полезные статьи"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="#3F4A55" />
+
+            <CollectionView ItemsSource="{Binding Articles}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame CornerRadius="15" BackgroundColor="#E3F2FD" Padding="15" Margin="0,10">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnArticleTapped" />
+                            </Frame.GestureRecognizers>
+                            <StackLayout>
+                                <Image Source="{Binding ImageUrl1}" HeightRequest="150" HorizontalOptions="FillAndExpand"  Aspect="AspectFill"/>
+                                <Label Text="{Binding Title}" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#3F4A55" />
+                                <Label Text="{Binding Description}" FontSize="14" TextColor="#5F5F5F" HorizontalOptions="Center" />
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

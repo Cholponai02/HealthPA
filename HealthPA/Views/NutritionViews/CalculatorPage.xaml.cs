@@ -1,4 +1,4 @@
-namespace HealthPA.Views;
+namespace HealthPA.Views.NutritionViews;
 
 public partial class CalculatorPage : ContentPage
 {

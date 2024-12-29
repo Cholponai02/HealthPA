@@ -54,7 +54,7 @@
             <Frame Padding="0" BackgroundColor="White" HasShadow="True" CornerRadius="10" Grid.Row="0" Grid.Column="1">
                 <StackLayout HorizontalOptions="Center" Padding="10">
                     <Image Source="goal.png" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center"/>
-                    <Label Text="Питание"
+                    <Label Text="Привычки"
                        FontSize="20"
                        TextColor="#333333"
                        HorizontalOptions="Center"/>
@@ -63,9 +63,12 @@
 
             <!-- Питание -->
             <Frame Padding="0" BackgroundColor="White" HasShadow="True" CornerRadius="10" Grid.Row="1" Grid.Column="0">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnFoodClicked" />
+                </Frame.GestureRecognizers>
                 <StackLayout HorizontalOptions="Center" Padding="10">
                     <Image Source="diet.png" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center"/>
-                    <Label Text="Сон"
+                    <Label Text="Питание"
                        FontSize="20"
                        TextColor="#333333"
                        HorizontalOptions="Center"/>

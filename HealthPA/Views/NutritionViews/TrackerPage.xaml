@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HealthPA.Views.NutritionViews.TrackerPage"
+             Title="Трекер питания">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="15">
+            
+            <Label Text="Здесь вы можете отслеживать потребление калорий в зависимости от продуктов и их количества. Введите продукт и его количество, чтобы увидеть количество калорий."
+                   FontSize="16"
+                   TextColor="#5F5F5F"
+                   HorizontalOptions="Center" />
+
+            <!-- Ввод продукта -->
+            <Entry x:Name="ProductEntry"
+                   Placeholder="Введите продукт"
+                   FontSize="16"
+                   TextColor="#3F4A55"
+                   HorizontalOptions="FillAndExpand" />
+
+            <!-- Ввод количества -->
+            <Entry x:Name="QuantityEntry"
+                   Placeholder="Введите количество (г)"
+                   Keyboard="Numeric"
+                   FontSize="16"
+                   TextColor="#3F4A55"
+                   HorizontalOptions="FillAndExpand" />
+
+            <!-- Кнопка для расчета калорий -->
+            <Button Text="Рассчитать калории"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"
+                    CornerRadius="10"
+                    Clicked="OnCalculateCaloriesClicked" />
+
+            <!-- Вывод результата -->
+            <Label x:Name="CaloriesLabel"
+                   FontSize="16"
+                   TextColor="#5F5F5F"
+                   HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

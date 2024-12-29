@@ -11,11 +11,6 @@ public partial class AccountPage : ContentPage
         await DisplayAlert("Лекарства", "Открыть раздел Лекарства", "OK");
     }
 
-    private async void OnNutritionClicked(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("CalculatorPage");
-    }
-
     private async void OnSleepClicked(object sender, EventArgs e)
     {
         await DisplayAlert("Сон", "Открыть раздел Сон", "OK");

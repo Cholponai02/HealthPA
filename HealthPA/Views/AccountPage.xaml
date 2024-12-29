@@ -45,29 +45,6 @@
                 </Grid>
             </Frame>
 
-            <!-- Калькулятор -->
-            <Frame CornerRadius="10"
-                   BackgroundColor="#2196F3"
-                   Padding="0"
-                   HeightRequest="50">
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnNutritionClicked" />
-                </Frame.GestureRecognizers>
-                <Grid Padding="15,0"
-                      HorizontalOptions="FillAndExpand"
-                      VerticalOptions="Center">
-                    <Label Text="Калькулятор калорий"
-                           FontSize="18"
-                           VerticalTextAlignment="Center"
-                           TextColor="White" />
-                    <Image Source="arrow_right.png"
-                           HorizontalOptions="End"
-                           VerticalOptions="Center"
-                           WidthRequest="20" 
-                           HeightRequest="20" />
-                </Grid>
-            </Frame>
-
             <!-- Сон -->
             <Frame CornerRadius="10"
                    BackgroundColor="#FF9800"

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HealthPA.Views.NutritionPage"
+             Title="Питание">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="5" Padding="15">
+
+            <!-- Совет дня -->
+            <Frame CornerRadius="15" BackgroundColor="#FFF8E1" Padding="10" Margin="0,10">
+                <StackLayout Orientation="Horizontal" Spacing="10">
+                    <!-- Иконка -->
+                    <!--<Image Source="advice_icon.png" HeightRequest="50" WidthRequest="50" VerticalOptions="Start" />-->
+
+                    <!-- Текст совета -->
+                    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+                        <Label Text="Совет дня"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="#3F4A55" />
+
+                        <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                            <Label x:Name="DailyAdviceLabel"
+                                   FontSize="14"
+                                   TextColor="#5F5F5F"
+                                   LineBreakMode="WordWrap"
+                                   Text="Пейте воду за 30 минут до еды, чтобы улучшить пищеварение. Также избегайте сладкого перед тренировкой, чтобы поддерживать энергию." />
+                        </ScrollView>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+
+            <!-- Кнопка обновления совета -->
+            <Button Text="Еще советы"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"
+                    CornerRadius="10"
+                    Margin="0,5"
+                    HeightRequest="50"
+                    Clicked="OnMoreAdviceClicked" />
+
+            <!-- Блоки -->
+            <Frame CornerRadius="15" BackgroundColor="#E3F2FD" Padding="15">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OpenTracker" />
+                </Frame.GestureRecognizers>
+                <StackLayout>
+                    <Image Source="tracker_icon.png" HeightRequest="70" WidthRequest="70" HorizontalOptions="Center" />
+                    <Label Text="Трекер питания"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="#3F4A55" />
+                </StackLayout>
+            </Frame>
+
+            <Frame CornerRadius="15" BackgroundColor="#E3F2FD" Padding="15">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnClaculateClicked" />
+                </Frame.GestureRecognizers>
+                <StackLayout>
+                    <Image Source="calculator.png" HeightRequest="70" WidthRequest="70" HorizontalOptions="Center" />
+                    <Label Text="Калькулятор калорий"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="#3F4A55" />
+                </StackLayout>
+            </Frame>
+
+            <Frame CornerRadius="15" BackgroundColor="#E3F2FD" Padding="15">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OpenDietPlan" />
+                </Frame.GestureRecognizers>
+                <StackLayout>
+                    <Image Source="diet_icon.png" HeightRequest="70" WidthRequest="70" HorizontalOptions="Center" />
+                    <Label Text="Подбор рациона"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="#3F4A55" />
+                </StackLayout>
+            </Frame>
+
+            <Frame CornerRadius="15" BackgroundColor="#E3F2FD" Padding="15">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OpenArticles" />
+                </Frame.GestureRecognizers>
+                <StackLayout>
+                    <Image Source="articles_icon.png" HeightRequest="70" WidthRequest="70" HorizontalOptions="Center" />
+                    <Label Text="Полезные статьи"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="#3F4A55" />
+                </StackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

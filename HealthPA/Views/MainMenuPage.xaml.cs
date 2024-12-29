@@ -11,5 +11,9 @@ public partial class MainMenuPage : ContentPage
     {
         await Shell.Current.GoToAsync("SportPage");
     }
+    private async void OnFoodClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("NutritionPage");
+    }
 
 }
