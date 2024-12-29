@@ -2,11 +2,120 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HealthPA.Views.NutritionViews.DietPlanPage"
-             Title="DietPlanPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             xmlns:viewmodels="clr-namespace:HealthPA.ViewModels"
+             Title="Подбор рациона">
+
+    <ContentPage.BindingContext>
+        <viewmodels:DietViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="15">
+
+            <!-- Выбор цели -->
+            <Label Text="Выберите вашу цель" FontSize="20" FontAttributes="Bold" />
+            <Picker ItemsSource="{Binding DietGoals}" ItemDisplayBinding="{Binding Goal}" Title="Цель питания" SelectedItem="{Binding SelectedGoal}"/>
+
+            <!-- Описание цели -->
+            <Label Text="{Binding SelectedGoal.Description}" FontSize="16" />
+
+            <!-- Выбор пола -->
+            <Label Text="Выберите ваш пол" FontSize="16" />
+            <Picker ItemsSource="{Binding Genders}" ItemDisplayBinding="{Binding GenderUser}" Title="Пол" SelectedItem="{Binding SelectedGender}" />
+
+            <!-- Выбор образа жизни -->
+            <Label Text="Выберите ваш образ жизни" FontSize="16" />
+            <Picker ItemsSource="{Binding Lifestyles}" ItemDisplayBinding="{Binding Lifestyle}" Title="Образ жизни" SelectedItem="{Binding SelectedLifestyle}" />
+
+            <!-- Рекомендованные продукты -->
+            <Label Text="Рекомендуемые продукты:" FontSize="16" />
+            <CollectionView ItemsSource="{Binding ProductRecommendations}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Label Text="{Binding Name}" />
+                            <Label Text="{Binding Category}" />
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Параметры аллергий -->
+            <Label Text="Выберите аллергии и предпочтения" FontSize="16" />
+            <CollectionView ItemsSource="{Binding Allergies}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Horizontal">
+                            <Switch IsToggled="{Binding IsSelected}" />
+                            <Label Text="{Binding Allergen}" />
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!--<Button Text="Составить рацион" BackgroundColor="#4CAF50" TextColor="White" Clicked="OnCreateDietPlanClicked" />-->
+            <Button Text="Сгенерировать меню"
+        Command="{Binding GenerateDietPlanCommand}" />
+
+            <!-- Меню на неделю -->
+            <Label Text="Меню на неделю" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" Margin="10" />
+            <!-- Индикатор загрузки -->
+            <ActivityIndicator IsRunning="{Binding IsLoading}" 
+                        IsVisible="{Binding IsLoading}" 
+                        Color="Blue" 
+                        VerticalOptions="CenterAndExpand" />
+
+            <CollectionView ItemsSource="{Binding WeeklyMenu}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="10" Padding="10" BackgroundColor="#F5F5F5" CornerRadius="10">
+                            <VerticalStackLayout Spacing="10">
+                                <!-- День недели -->
+                                <Label Text="{Binding Day}" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="#007ACC" />
+
+                                <!-- Завтрак -->
+                                <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                                    <Image Source="breakfast_icon.png" HeightRequest="24" WidthRequest="24" />
+                                    <VerticalStackLayout>
+                                        <Label Text="Завтрак" FontSize="16" FontAttributes="Bold" />
+                                        <Label Text="{Binding Meals[0].Name}" FontSize="14" />
+                                        <Label Text="{Binding Meals[0].Description}" FontSize="12" TextColor="Gray" />
+                                        <Label Text="{Binding Meals[0].Calories, StringFormat='Калории: {0}'}" FontSize="12" TextColor="Gray" />
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+
+                                <!-- Обед -->
+                                <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                                    <Image Source="lunch_icon.png" HeightRequest="24" WidthRequest="24" />
+                                    <VerticalStackLayout>
+                                        <Label Text="Обед" FontSize="16" FontAttributes="Bold" />
+                                        <Label Text="{Binding Meals[1].Name}" FontSize="14" />
+                                        <Label Text="{Binding Meals[1].Description}" FontSize="12" TextColor="Gray" />
+                                        <Label Text="{Binding Meals[1].Calories, StringFormat='Калории: {0}'}" FontSize="12" TextColor="Gray" />
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+
+                                <!-- Ужин -->
+                                <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                                    <Image Source="dinner_icon.png" HeightRequest="24" WidthRequest="24" />
+                                    <VerticalStackLayout>
+                                        <Label Text="Ужин" FontSize="16" FontAttributes="Bold" />
+                                        <Label Text="{Binding Meals[2].Name}" FontSize="14" />
+                                        <Label Text="{Binding Meals[2].Description}" FontSize="12" TextColor="Gray" />
+                                        <Label Text="{Binding Meals[2].Calories, StringFormat='Калории: {0}'}" FontSize="12" TextColor="Gray" />
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+    
 </ContentPage>
