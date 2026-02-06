@@ -1,12 +1,28 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cv="clr-namespace:Camera.MAUI;assembly=Camera.MAUI"
              x:Class="HealthPA.Views.AItrackerPage"
              Title="ИИ трекер приседаний">
 
-    <ScrollView>
-        <VerticalStackLayout Spacing="5" Padding="15">
-            
+    <Grid RowDefinitions="*, Auto">
+        <cv:CameraView x:Name="cameraView" 
+                       Grid.Row="0"
+                       HorizontalOptions="FillAndExpand" 
+                       VerticalOptions="FillAndExpand" />
+
+        <VerticalStackLayout Grid.Row="1" Spacing="10" Padding="15" BackgroundColor="#80000000">
+            <Label x:Name="counterLabel" 
+                   Text="Приседаний: 0" 
+                   FontSize="24" 
+                   TextColor="White" 
+                   HorizontalOptions="Center" />
+
+            <Label x:Name="statusLabel" 
+                   Text="Встаньте в кадр" 
+                   TextColor="Yellow" 
+                   HorizontalOptions="Center" />
+
+            <Button Text="Старт" Clicked="OnStartClicked" />
         </VerticalStackLayout>
-    </ScrollView>
+    </Grid>
 </ContentPage>
