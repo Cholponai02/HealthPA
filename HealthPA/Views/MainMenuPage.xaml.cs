@@ -15,5 +15,9 @@ public partial class MainMenuPage : ContentPage
     {
         await Shell.Current.GoToAsync("NutritionPage");
     }
+    private async void OnAItrackerClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("AItrackerPage");
+    }
 
 }

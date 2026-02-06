@@ -26,6 +26,7 @@ namespace HealthPA
             Routing.RegisterRoute("ArticlesPage", typeof(ArticlesPage));
             Routing.RegisterRoute("DietPlanPage", typeof(DietPlanPage));
             Routing.RegisterRoute("TrackerPage", typeof(TrackerPage));
+            Routing.RegisterRoute("AItrackerPage", typeof(AItrackerPage));
         }
     }
 }

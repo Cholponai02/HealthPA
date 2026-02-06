@@ -77,12 +77,15 @@
 
             <!-- Электронная медкарта -->
             <Frame Padding="0" BackgroundColor="White" HasShadow="True" CornerRadius="10" Grid.Row="1" Grid.Column="1">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAItrackerClicked" />
+                </Frame.GestureRecognizers>
                 <StackLayout HorizontalOptions="Center" Padding="10">
-                    <!--<Image Source="" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center"/>
-                    <Label Text=""
+                    <Image Source="dotnet_bot" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center"/>
+                    <Label Text="AI трекер"
                        FontSize="20"
                        TextColor="#333333"
-                       HorizontalOptions="Center"/>-->
+                       HorizontalOptions="Center"/>
                 </StackLayout>
             </Frame>
         </Grid>
