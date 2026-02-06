@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Maui.Controls;
+using SkiaSharp;
 
 #if ANDROID
 using Xamarin.TensorFlow.Lite;
@@ -48,6 +49,60 @@ public partial class AItrackerPage : ContentPage
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"Ошибка: {ex.Message}");
+        }
+    }
+
+
+    private bool isTracking = false;
+
+    private async void OnStartClicked(object sender, EventArgs e)
+    {
+        var status = await Permissions.CheckStatusAsync<Permissions.Camera>();
+        if (status != PermissionStatus.Granted)
+            status = await Permissions.RequestAsync<Permissions.Camera>();
+
+        if (status == PermissionStatus.Granted)
+        {
+            if (!isTracking)
+            {
+                await cameraView.StartCameraAsync();
+                isTracking = true;
+
+                // Запускаем бесконечный цикл обработки кадров, пока isTracking == true
+                _ = ProcessFramesLoop();
+
+                if (sender is Button btn) btn.Text = "Stop";
+            }
+            else
+            {
+                await cameraView.StopCameraAsync();
+                isTracking = false;
+                if (sender is Button btn) btn.Text = "Start";
+            }
+        }
+    }
+
+    private async Task ProcessFramesLoop()
+    {
+        while (isTracking)
+        {
+            try
+            {
+                // Пытаемся захватить кадр. 
+                // Попробуй cameraView.GetSnapshot() или cameraView.TakeSnapshot()
+                // Если названия другие, начни писать cameraView.Take... и VS подскажет
+                var image = cameraView.GetSnapShot();
+
+                if (image != null)
+                {
+                    // Отправляем на анализ в твой TensorFlow
+                    // ProcessImage(image); 
+                }
+            }
+            catch { /* Игнорируем ошибки захвата */ }
+
+            // Ждем 200 мс (это даст нам ~5 кадров в секунду)
+            await Task.Delay(200);
         }
     }
 
