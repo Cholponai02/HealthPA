@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Camera.MAUI;
 using Microsoft.Maui.Controls;
 using SkiaSharp;
 
@@ -65,13 +66,28 @@ public partial class AItrackerPage : ContentPage
         {
             if (!isTracking)
             {
-                await cameraView.StartCameraAsync();
-                isTracking = true;
+                // 1. Проверяем, загрузились ли камеры
+                if (cameraView.Cameras.Count > 0)
+                {
+                    // Выбираем фронтальную камеру (для селфи-тренировки)
+                    cameraView.Camera = cameraView.Cameras.FirstOrDefault(c => c.Position == CameraPosition.Front)
+                                        ?? cameraView.Cameras.First();
+                }
 
-                // Запускаем бесконечный цикл обработки кадров, пока isTracking == true
-                _ = ProcessFramesLoop();
+                // 2. Запускаем
+                var result = await cameraView.StartCameraAsync();
 
-                if (sender is Button btn) btn.Text = "Stop";
+                if (result == CameraResult.Success)
+                {
+                    isTracking = true;
+                    _ = ProcessFramesLoop();
+                    if (sender is Button btn) btn.Text = "Stop";
+                    statusLabel.Text = "Pronti! (Готовы!)"; // Немного итальянского для практики
+                }
+                else
+                {
+                    await DisplayAlert("Ошибка", $"Камера не запустилась: {result}", "OK");
+                }
             }
             else
             {
@@ -95,14 +111,93 @@ public partial class AItrackerPage : ContentPage
 
                 if (image != null)
                 {
-                    // Отправляем на анализ в твой TensorFlow
-                    // ProcessImage(image); 
+#if ANDROID
+                    AnalyzePose(image);
+#endif
                 }
             }
             catch { /* Игнорируем ошибки захвата */ }
 
             // Ждем 200 мс (это даст нам ~5 кадров в секунду)
             await Task.Delay(200);
+        }
+    }
+
+#if ANDROID
+    private void AnalyzePose(ImageSource source)
+    {
+        Task.Run(async () =>
+        {
+            try
+            {
+                // 1. Конвертируем ImageSource в поток
+                using var stream = await ((StreamImageSource)source).Stream(CancellationToken.None);
+                using var bitmap = SKBitmap.Decode(stream);
+
+                // 2. Ресайз до 192x192 (требование MoveNet)
+                var resized = bitmap.Resize(new SKImageInfo(192, 192), SKFilterQuality.Low);
+
+                // 3. Создаем входной буфер для модели
+                var inputBuffer = Java.Nio.ByteBuffer.AllocateDirect(192 * 192 * 3 * 4);
+                inputBuffer.Order(Java.Nio.ByteOrder.NativeOrder());
+
+                // Заполняем буфер пикселями
+                for (int y = 0; y < 192; y++)
+                {
+                    for (int x = 0; x < 192; x++)
+                    {
+                        var color = resized.GetPixel(x, y);
+                        inputBuffer.PutFloat(color.Red / 255.0f);
+                        inputBuffer.PutFloat(color.Green / 255.0f);
+                        inputBuffer.PutFloat(color.Blue / 255.0f);
+                    }
+                }
+
+                // 4. Готовим выходной массив [1, 1, 17, 3]
+                // 17 ключевых точек (глаза, плечи, колени...), у каждой: Y, X, Score
+                var output = new float[1 * 1 * 17 * 3];
+                var outputObj = Java.Lang.Object.FromArray(output);
+
+                // 5. Запуск ИИ
+                tflite.Run(inputBuffer, outputObj);
+
+                // 6. Считаем приседание
+                ProcessKeypoints(output);
+            }
+            catch (Exception ex) { /* Ошибки обработки кадра */ }
+        });
+    }
+#endif
+
+    private int squatCount = 0;
+    private bool isDown = false;
+
+    private void ProcessKeypoints(float[] keypoints)
+    {
+        // Координата Y бедра (индекс 11*3 = 33) и колена (индекс 13*3 = 39)
+        // В MoveNet Y идет от 0 (верх) до 1 (низ экрана)
+        float hipY = keypoints[33];
+        float kneeY = keypoints[39];
+        float confidence = keypoints[35]; // Уверенность модели в точке 11
+
+        if (confidence < 0.3) return; // Игнорируем, если человека плохо видно
+
+        // Если бедро опустилось достаточно низко (близко к колену или ниже)
+        if (!isDown && hipY > (kneeY - 0.05f))
+        {
+            isDown = true;
+        }
+        // Если были внизу и поднялись обратно
+        else if (isDown && hipY < (kneeY - 0.15f))
+        {
+            isDown = false;
+            squatCount++;
+
+            // Обновляем UI в основном потоке
+            MainThread.BeginInvokeOnMainThread(() => {
+                counterLabel.Text = $"Приседаний: {squatCount}";
+                SemanticScreenReader.Announce($"Приседание {squatCount}"); // Для доступности
+            });
         }
     }
 
