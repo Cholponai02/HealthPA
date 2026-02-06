@@ -13,6 +13,7 @@ namespace HealthPA.Views;
 
 public partial class AItrackerPage : ContentPage
 {
+    private bool isProcessing = false;
 #if ANDROID
     private Interpreter tflite;
 #endif
@@ -102,24 +103,33 @@ public partial class AItrackerPage : ContentPage
     {
         while (isTracking)
         {
+            // Если ИИ еще занят прошлым кадром, просто ждем и пропускаем итерацию
+            if (isProcessing)
+            {
+                await Task.Delay(100);
+                continue;
+            }
+
             try
             {
-                // Пытаемся захватить кадр. 
-                // Попробуй cameraView.GetSnapshot() или cameraView.TakeSnapshot()
-                // Если названия другие, начни писать cameraView.Take... и VS подскажет
+                // Используем GetSnapShot, как в вашем текущем коде
                 var image = cameraView.GetSnapShot();
 
                 if (image != null)
                 {
 #if ANDROID
+                    isProcessing = true; // Поднимаем флаг: начали работу
                     AnalyzePose(image);
 #endif
                 }
             }
-            catch { /* Игнорируем ошибки захвата */ }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка захвата: {ex.Message}");
+            }
 
-            // Ждем 200 мс (это даст нам ~5 кадров в секунду)
-            await Task.Delay(200);
+            // 500 мс (2 кадра в секунду) — оптимально для приседаний и не перегружает CPU
+            await Task.Delay(500);
         }
     }
 
@@ -133,7 +143,7 @@ public partial class AItrackerPage : ContentPage
                 // 1. Конвертируем ImageSource в поток
                 using var stream = await ((StreamImageSource)source).Stream(CancellationToken.None);
                 using var bitmap = SKBitmap.Decode(stream);
-
+                if (bitmap == null) return;
                 // 2. Ресайз до 192x192 (требование MoveNet)
                 var resized = bitmap.Resize(new SKImageInfo(192, 192), SKFilterQuality.Low);
 
@@ -164,7 +174,14 @@ public partial class AItrackerPage : ContentPage
                 // 6. Считаем приседание
                 ProcessKeypoints(output);
             }
-            catch (Exception ex) { /* Ошибки обработки кадра */ }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка ИИ: {ex.Message}");
+            }
+            finally
+            {
+                isProcessing = false; // Опускаем флаг: теперь мы готовы к новому кадру
+            }
         });
     }
 #endif
