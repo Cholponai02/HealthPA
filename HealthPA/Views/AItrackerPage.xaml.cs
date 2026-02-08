@@ -4,6 +4,7 @@ using System.IO;
 using Camera.MAUI;
 using Microsoft.Maui.Controls;
 using SkiaSharp;
+using SkiaSharp.Views.Maui;
 
 #if ANDROID
 using Xamarin.TensorFlow.Lite;
@@ -134,63 +135,84 @@ public partial class AItrackerPage : ContentPage
     }
 
 #if ANDROID
-    private void AnalyzePose(ImageSource source)
+private void AnalyzePose(ImageSource source)
+{
+    Task.Run(async () =>
     {
-        Task.Run(async () =>
+        try
         {
-            try
+            using var stream = await ((StreamImageSource)source).Stream(CancellationToken.None);
+            using var bitmap = SKBitmap.Decode(stream);
+            if (bitmap == null) return;
+
+            // 1. Изменяем размер под вход модели (192x192)
+            var resized = bitmap.Resize(new SKImageInfo(192, 192), SKFilterQuality.Low);
+
+            // 2. Подготовка входного буфера (UINT8 - 1 байт на канал)
+            var inputBuffer = Java.Nio.ByteBuffer.AllocateDirect(192 * 192 * 3);
+            inputBuffer.Order(Java.Nio.ByteOrder.NativeOrder());
+            inputBuffer.Rewind();
+
+            for (int y = 0; y < 192; y++)
             {
-                // 1. Конвертируем ImageSource в поток
-                using var stream = await ((StreamImageSource)source).Stream(CancellationToken.None);
-                using var bitmap = SKBitmap.Decode(stream);
-                if (bitmap == null) return;
-                // 2. Ресайз до 192x192 (требование MoveNet)
-                var resized = bitmap.Resize(new SKImageInfo(192, 192), SKFilterQuality.Low);
-
-                // 3. Создаем входной буфер для модели
-                var inputBuffer = Java.Nio.ByteBuffer.AllocateDirect(192 * 192 * 3 * 4);
-                inputBuffer.Order(Java.Nio.ByteOrder.NativeOrder());
-
-                // Заполняем буфер пикселями
-                for (int y = 0; y < 192; y++)
+                for (int x = 0; x < 192; x++)
                 {
-                    for (int x = 0; x < 192; x++)
-                    {
-                        var color = resized.GetPixel(x, y);
-                        inputBuffer.PutFloat(color.Red / 255.0f);
-                        inputBuffer.PutFloat(color.Green / 255.0f);
-                        inputBuffer.PutFloat(color.Blue / 255.0f);
-                    }
+                    var color = resized.GetPixel(x, y);
+                    // Java ByteBuffer ожидает sbyte (знаковый байт)
+                    inputBuffer.Put((sbyte)color.Red);
+                    inputBuffer.Put((sbyte)color.Green);
+                    inputBuffer.Put((sbyte)color.Blue);
                 }
-
-                // 4. Готовим выходной массив [1, 1, 17, 3]
-                // 17 ключевых точек (глаза, плечи, колени...), у каждой: Y, X, Score
-                var output = new float[1 * 1 * 17 * 3];
-                var outputObj = Java.Lang.Object.FromArray(output);
-
-                // 5. Запуск ИИ
-                tflite.Run(inputBuffer, outputObj);
-
-                // 6. Считаем приседание
-                ProcessKeypoints(output);
             }
-            catch (Exception ex)
+
+            // 3. Подготовка выходного массива строго формы [1, 1, 17, 3]
+            // Это решает ошибку "Cannot copy... to [51]"
+            var outputArray = new float[1][][][];
+            outputArray[0] = new float[1][][];
+            outputArray[0][0] = new float[17][];
+            for (int i = 0; i < 17; i++)
             {
-                System.Diagnostics.Debug.WriteLine($"Ошибка ИИ: {ex.Message}");
+                outputArray[0][0][i] = new float[3];
             }
-            finally
+
+            // Оборачиваем многомерный массив в Java.Object
+            var outputObj = Java.Lang.Object.FromArray(outputArray);
+
+            // 4. Запуск модели
+            tflite.Run(inputBuffer, outputObj);
+
+            // 5. Преобразуем многомерный результат в плоский массив float[51] для логики счета
+            float[] flatKeypoints = new float[51];
+            for (int i = 0; i < 17; i++)
             {
-                isProcessing = false; // Опускаем флаг: теперь мы готовы к новому кадру
+                flatKeypoints[i * 3] = outputArray[0][0][i][0];     // Y (0..1)
+                flatKeypoints[i * 3 + 1] = outputArray[0][0][i][1]; // X (0..1)
+                flatKeypoints[i * 3 + 2] = outputArray[0][0][i][2]; // Confidence (Score)
             }
-        });
-    }
+
+            // 6. Отправляем данные на отрисовку и в счетчик
+            ProcessKeypoints(flatKeypoints);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Ошибка ИИ: {ex.Message}");
+        }
+        finally
+        {
+            isProcessing = false;
+        }
+    });
+}
 #endif
 
     private int squatCount = 0;
     private bool isDown = false;
+    private float[] lastKeypoints; // Храним тут точки для отрисовки
 
     private void ProcessKeypoints(float[] keypoints)
     {
+        System.Diagnostics.Debug.WriteLine($"Hip Y: {keypoints[33]}, Confidence: {keypoints[35]}");
+        lastKeypoints = keypoints;
         // Координата Y бедра (индекс 11*3 = 33) и колена (индекс 13*3 = 39)
         // В MoveNet Y идет от 0 (верх) до 1 (низ экрана)
         float hipY = keypoints[33];
@@ -215,6 +237,35 @@ public partial class AItrackerPage : ContentPage
                 counterLabel.Text = $"Приседаний: {squatCount}";
                 SemanticScreenReader.Announce($"Приседание {squatCount}"); // Для доступности
             });
+        }
+        // Заставляем Canvas перерисоваться
+        MainThread.BeginInvokeOnMainThread(() => {
+            canvasView?.InvalidateSurface();
+        });
+    }
+
+    private void OnCanvasPaintSurface(object sender, SKPaintSurfaceEventArgs e)
+    {
+        var canvas = e.Surface.Canvas;
+        canvas.Clear(); // Очищаем прошлый кадр
+
+        if (lastKeypoints == null) return;
+
+        var paint = new SKPaint { Color = SKColors.Lime, StrokeWidth = 5, IsAntialias = true };
+        var circlePaint = new SKPaint { Color = SKColors.Red, Style = SKPaintStyle.Fill };
+
+        // Проходим по 17 точкам (Y, X, Score)
+        for (int i = 0; i < 17; i++)
+        {
+            float y = (float)(lastKeypoints[i * 3] * canvasView.Height);
+            // Зеркалим X, если камера фронтальная
+            float x = (float)((1 - lastKeypoints[i * 3 + 1]) * canvasView.Width);
+            float score = lastKeypoints[i * 3 + 2];
+
+            if (score > 0.3)
+            {
+                canvas.DrawCircle(x, y, 8, circlePaint);
+            }
         }
     }
 
