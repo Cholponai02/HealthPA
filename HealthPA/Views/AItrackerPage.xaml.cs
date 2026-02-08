@@ -115,7 +115,11 @@ public partial class AItrackerPage : ContentPage
             {
                 // Используем GetSnapShot, как в вашем текущем коде
                 var image = cameraView.GetSnapShot();
-
+                if (image == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("Snapshot вернул null!");
+                    return;
+                }
                 if (image != null)
                 {
 #if ANDROID
@@ -144,6 +148,7 @@ private void AnalyzePose(ImageSource source)
             using var stream = await ((StreamImageSource)source).Stream(CancellationToken.None);
             using var bitmap = SKBitmap.Decode(stream);
             if (bitmap == null) return;
+            System.Diagnostics.Debug.WriteLine($"Bitmap: {bitmap?.Width}x{bitmap?.Height}");
 
             // 1. Изменяем размер под вход модели (192x192)
             var resized = bitmap.Resize(new SKImageInfo(192, 192), SKFilterQuality.Low);
